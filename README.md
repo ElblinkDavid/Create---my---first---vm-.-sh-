@@ -12,6 +12,37 @@ Basic Networking (open-port)
 
 ---
 
+#!/bin/bash
+
+# Variables
+RESOURCE_GROUP="learn-rg-$RANDOM"
+LOCATION="eastus"
+VM_NAME="myFirstVM"
+
+# 1. Create a resource group
+echo "Creating resource group: $RESOURCE_GROUP"
+az group create --name $RESOURCE_GROUP --location $LOCATION
+
+# 2. Create the VM
+echo "Creating virtual machine: $VM_NAME"
+az vm create \
+  --resource-group $RESOURCE_GROUP \
+  --name $VM_NAME \
+  --image UbuntuLTS \
+  --admin-username azureuser \
+  --generate-ssh-keys
+
+# 3. Open port 80 to allow web traffic
+echo "Opening port 80"
+az vm open-port --port 80 --resource-group $RESOURCE_GROUP --name $VM_NAME
+
+# 4. Get the public IP address
+IP_ADDRESS=$(az vm list-ip-addresses --resource-group $RESOURCE_GROUP --name $VM_NAME --query "[0].virtualMachine.network.publicIpAddresses[0].ipAddress" --output tsv)
+
+echo "VM created successfully!"
+echo "Public IP address: $IP_ADDRESS"
+echo "You can now SSH into it or host a web page at http://$IP_ADDRESS"
+
 ## 🧠 What This Script Does
 
 1. Creates a new **Resource Group**
