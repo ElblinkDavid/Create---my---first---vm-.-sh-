@@ -12,25 +12,21 @@ Basic Networking (open-port)
 
 ---
 
-#!/bin/bash
-
-# Variables
-RESOURCE_GROUP="learn-rg-$RANDOM"
-LOCATION="eastus"
-VM_NAME="myFirstVM"
-
 # 1. Create a resource group
 echo "Creating resource group: $RESOURCE_GROUP"
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
-# 2. Create the VM
-echo "Creating virtual machine: $VM_NAME"
+1.2 > CREATE VM 
 az vm create \
-  --resource-group $RESOURCE_GROUP \
-  --name $VM_NAME \
-  --image UbuntuLTS \
-  --admin-username azureuser \
-  --generate-ssh-keys
+--resource-group $RESOURCE_GROUP \
+--name $VM_NAME \
+--image UbuntuLTS \
+--admin-username azureuser \
+--generate-ssh-keys
+
+Web Server Setup 
+The script below opens port 80 but doesn’t install a web server. For a complete “Welcome to Azure” page, you could add a step to SSH into the VM and install Apache/Nginx. For example:
+ssh azureuser@$IP_ADDRESS "sudo apt update && sudo apt install -y apache2 && echo '<h1>Welcome to Azure</h1>' | sudo tee /var/www/html/index.html"
 
 # 3. Open port 80 to allow web traffic
 echo "Opening port 80"
