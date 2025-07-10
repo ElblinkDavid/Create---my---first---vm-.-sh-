@@ -53,6 +53,7 @@ echo "You can now SSH into it or host a web page at http://$IP_ADDRESS"
 Once it finishes, you’ll see the IP, and you can run:
 ```bash
 curl http://<you
+
 Real Things I Learned While Doing This
 
 I wanted to make a note here for anyone else trying to follow along (or myself, if I ever forget!):
